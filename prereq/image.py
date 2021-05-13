@@ -5,7 +5,7 @@ from PIL import Image
 import numpy as np
 
 ## Reading the image file
-im = Image.open(r"inputImage/blackhole.jpg")
+im = Image.open(r"../inputImage/blackhole.jpg")
 #im.show()  #uncomment this to view the image
 
 # reading the pixels of the image as an array.
@@ -37,6 +37,6 @@ print(im_org.shape)
 img_op = Image.fromarray(np.uint8(im_org))
 
 # now the save the new image
-img_op.save("outputImage/op1.jpg")
+img_op.save("../outputImage/op1.jpg")
 
 
