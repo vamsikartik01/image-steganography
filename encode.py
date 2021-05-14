@@ -27,10 +27,10 @@ def convert(byte,pixbyte,flag):
             if bit=='0':
                 pass
             elif bit=='1':
-                pixval -= 1
+                pixval += 1
         else:
             if bit=='0':
-                pixval -= 1
+                pixval += 1
             elif bit=='1':
                 pass
         pixbyten[pnt] = pixval
@@ -38,16 +38,17 @@ def convert(byte,pixbyte,flag):
     return pixbyten
         
 
+#if __name__ == "__main__":
 def encode(img, mssg):
-    #img = Image.open("inputImage/blackhole.jpg")
+    #img = Image.open("inputImage/blackhole.jpg",'r')
+    #print(arr[11])
+    #mssg = "Hello I am black hole! :)"
     imgW, imgH = img.size
     arr,length = Img2Arr(img)
-    #print(arr[11])
-    #mssg = "Hello World!"
     lenm = len(mssg)
     if lenm > length:
-        print("messege length is more than the image.")
-        return None
+        print("messege length is more than the image size.")
+        #return None
 
     for lenUsed,char in enumerate(mssg):
         pixbyte = arr[lenUsed]
@@ -63,8 +64,9 @@ def encode(img, mssg):
     #print(arr[11])
     arr = arr.reshape(imgW, imgH, 3)
     img_en = Image.fromarray(np.uint8(arr))
+    img_en.save("outputImage/blackhole-en.png")
 
-    return img_en
+    #return img_en
     
         
             
