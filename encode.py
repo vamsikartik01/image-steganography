@@ -64,9 +64,9 @@ def encode(img, mssg):
     #print(arr[11])
     arr = arr.reshape(imgW, imgH, 3)
     img_en = Image.fromarray(np.uint8(arr))
-    img_en.save("outputImage/blackhole-en.png")
+    #img_en.save("outputImage/blackhole-en.png")
 
-    #return img_en
+    return img_en
     
         
             
