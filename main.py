@@ -31,10 +31,28 @@ if __name__=="__main__":
         print("Keep your image file in the folder named inputImage")
         print("Name of the image file with extension:")
         name = str(input().strip())
-        print("Enter the Messege to encrypt:")
-        mssg = str(input().strip())
-        print("Please Wait")
-        status,name = encrypt(name, mssg)
+        #
+        print("To enter text press 1 or to add text file press 2")
+        respe = int(input().strip())
+        if respe==2:
+            print("enter file name:")
+            fname = str(input().strip())
+            print("Please Wait")
+            f_read = open("inputImage/"+fname,'r')
+            f_read.seek(0)
+            mssg = f_read.read()
+            f_read.close()
+            status,name = encrypt(name, mssg)
+
+        elif respe==1:
+            print("Enter the Messege to encrypt:")
+            mssg = str(input().strip())
+            print("Please Wait")
+            status,name = encrypt(name, mssg)
+
+        else:
+            print("Error occured select properly!")
+    
         if status:
             print("Messege encrypted succesfully")
             print("Your file is the image with name ",name,"in outputImage folder")
@@ -51,28 +69,17 @@ if __name__=="__main__":
             print("Messege decryption is successful!")
             print("Your messege is: ")
             print(mssg)
+            print("Do you want to save the messege in a file(y/n):")
+            respd = str(input().strip())
+            if respd=='y':
+                print("enter name of the file:")
+                fname = str(input().strip())
+                f_write = open("outputImage/"+fname+".txt",'w')
+                f_write.write(mssg)
+                f_write.close()
+                
         else:
             print("Image decing failed! please try again")
 
     else:
         print("Response unidentified. please try again")
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-    

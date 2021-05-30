@@ -27,6 +27,6 @@ def decode(img):
 
         if flag=='0':
             break
-
+        
     return mssg
         

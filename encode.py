@@ -49,7 +49,6 @@ def encode(img, mssg):
     if lenm > length:
         print("messege length is more than the image size.")
         #return None
-
     for lenUsed,char in enumerate(mssg):
         pixbyte = arr[lenUsed]
         byte = char2bin(char)
