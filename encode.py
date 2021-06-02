@@ -3,10 +3,7 @@ import numpy as np
 
 def Img2Arr(img):
     imgArr = np.array(img.getdata())
-    #print(imgArr.shape)
-    imgArr = imgArr.reshape(int(imgArr.shape[0]/3),9)
-    #print(imgArr.shape)
-    return imgArr, imgArr.shape[0]
+    return imgArr, int(imgArr.shape[0]/3)
 
 
 def char2bin(char):
@@ -14,34 +11,40 @@ def char2bin(char):
     charBin = format(charVal, "08b")
     return charBin
     
-def convert(byte,pixbyte,flag):
-    pixbyten = pixbyte
+def convert(byte, pxbytes, flag):
     if flag:
         byte += '1'
     else:
         byte += '0'
 
-    for pnt,bit in enumerate(byte):
-        pixval = pixbyte[pnt]
-        if pixval%2 == 0:
-            if bit=='0':
-                pass
-            elif bit=='1':
-                pixval += 1
-        else:
-            if bit=='0':
-                pixval += 1
-            elif bit=='1':
-                pass
-        pixbyten[pnt] = pixval
+    bytes = [byte[:3], byte[3:6], byte[6:9]]
 
-    return pixbyten
+    for i in range(3):
+        byte = bytes[i]
+        pxbyte = pxbytes[i]
+        for pnt, bit in enumerate(byte):
+            pxv = pxbyte[pnt]
+            if bit=='0':
+                if pxv%2==0:
+                    pass
+                else:
+                    pxv -= 1
+            elif bit=='1':
+                if pxv%2==0:
+                    pxv -= 1
+                else:
+                    pass
+            else:
+                pass
+            pxbyte[pnt] = pxv
+        pxbytes[i] = pxbyte
+
+    return pxbytes
         
 
 #if __name__ == "__main__":
 def encode(img, mssg):
     #img = Image.open("inputImage/blackhole.jpg",'r')
-    #print(arr[11])
     #mssg = "Hello I am black hole! :)"
     imgW, imgH = img.size
     arr,length = Img2Arr(img)
@@ -50,20 +53,21 @@ def encode(img, mssg):
         print("messege length is more than the image size.")
         #return None
     for lenUsed,char in enumerate(mssg):
-        pixbyte = arr[lenUsed]
+        #pixbyte = arr[lenUsed]
+        pxbyte = arr[3*(lenUsed+1)-3: 3*(lenUsed+1)]
         byte = char2bin(char)
+
         if lenUsed < lenm-1:
             flag = True
         else:
             flag = False
         
-        pixbyten = convert(byte, pixbyte, flag)
-        arr[lenUsed] = pixbyten
+        pxbytes = convert(byte, pxbyte, flag)
+        arr[3*(lenUsed+1)-3: 3*(lenUsed+1)] = pxbytes
    
     #print(arr[11])
-    arr = arr.reshape(imgW, imgH, 3)
+    arr = arr.reshape(imgH, imgW, 3)
     img_en = Image.fromarray(np.uint8(arr))
-    #img_en.save("outputImage/blackhole-en.png")
 
     return img_en
     

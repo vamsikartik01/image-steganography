@@ -20,8 +20,11 @@ def decode(img):
     imgArr, imgLen = Img2Arr(img)
     #print(imgArr)
     mssg = ""
-    for Arr in imgArr:
-        bval, flag = pix2bin(Arr)
+    i=1
+    while True:
+        pxbytes = np.concatenate((imgArr[3*(i)-3],imgArr[3*(i)-2],imgArr[3*(i)-1]))
+        i = i+1
+        bval, flag = pix2bin(pxbytes)
         ascval = int(bval,2)
         mssg += chr(ascval)
 
@@ -29,4 +32,6 @@ def decode(img):
             break
         
     return mssg
+
+
         

@@ -98,7 +98,6 @@ def decode(img):
     i=1
     while True:
         pxbytes = np.concatenate((imgArr[3*(i)-3],imgArr[3*(i)-2],imgArr[3*(i)-1]))
-        print(pxbytes)
         i = i+1
         bval, flag = pix2bin(pxbytes)
         ascval = int(bval,2)
@@ -117,10 +116,9 @@ def decode(img):
 def encrypt(name, mssg):
     file_path = "inputImage/"+name
     try:
-        img = Image.open(file_path,'r')
-        #if (os.path.getsize(file_path)*10)/(1024*1024) > 2:
-        #    img.save(file_path, optimizer=True, quality=10)
-        #    img = Image.open(file_path,'r')
+        img = Image.open(file_path)
+        img.save("inputImage/comp.jpg", optimize = True, quality=10)
+        img = Image.open('inputImage/comp.jpg')
  
         img_en = encode(img, mssg)
         name = name.split('.')[0]+"-en.png"

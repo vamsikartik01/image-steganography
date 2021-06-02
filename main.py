@@ -1,11 +1,15 @@
 from encode import encode
 from decode import decode
 from PIL import Image
+import os
     
 def encrypt(name, mssg):
     file_path = "inputImage/"+name
     try:
-        img = Image.open(file_path,'r')
+        img = Image.open(file_path)
+        img.save("inputImage/comp.jpg", optimize = True, quality=10)
+        img = Image.open('inputImage/comp.jpg')
+ 
         img_en = encode(img, mssg)
         name = name.split('.')[0]+"-en.png"
         file_out = "outputImage/"+name
@@ -17,7 +21,7 @@ def encrypt(name, mssg):
 def decrypt(name):
     file_path = "outputImage/"+name
     try:
-        img = Image.open(file_path, 'r')
+        img = Image.open(file_path)
         mssg = decode(img)
         return True,mssg
     except:
