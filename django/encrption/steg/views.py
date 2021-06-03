@@ -9,16 +9,39 @@ def index(request):
     if request.method == "POST" and request.FILES['myimage']:
         myimage = request.FILES['myimage']
         fs = FileSystemStorage()
-        filename = fs.save("input/"+myimage.name, myimage)
+        filename = fs.save("enc/input/"+myimage.name, myimage)
         messg = request.POST['messg']
         event = Event(imageName=myimage.name, messege=messg, status="Unsecure")
         event.save()
         stat, name = encrypt(myimage.name, messg)
+        print("status: ", stat)
         if stat:
             event.status = 'Secure'
             event.save()
-            uploaded_file_url = '/media/output/'+name
+            fs.delete("enc/input/"+myimage.name)
+            fs.delete("enc/comp/"+myimage.name)
+            uploaded_file_url = '/media/enc/output/'+name
             return render(request, 'steg/index.html', {
                 'uploaded_file_url': uploaded_file_url
             })
-    return render(request, 'steg/index.html', {'erm':"error encoding"})
+        else:
+            return render(request, 'steg/index.html', {'erm':"error encoding"})
+    return render(request, 'steg/index.html')
+
+def decode(request):
+    if request.method == "POST" and request.FILES['myimage']:
+        fs = FileSystemStorage()
+        myimage = request.FILES['myimage']
+        fs.save("dec/"+myimage.name, myimage)
+        event = Event(imageName=myimage.name, messege="DECODING", status="Secure")
+        event.save()
+        stat, messg = decrypt(myimage.name)
+        if stat:
+            event.status = 'Unsecure'
+            event.save()
+            fs.delete("dec/"+myimage.name)
+            return render(request, "steg/decode.html", {'messege':messg})
+        else:
+            return render(request, "steg/decode.html", {'messege':"Decoding failed!"})
+
+    return render(request, 'steg/decode.html')

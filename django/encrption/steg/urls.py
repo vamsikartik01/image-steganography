@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('decode', views.decode, name='decode'),
 ]
 
 if settings.DEBUG:

@@ -114,22 +114,22 @@ def decode(img):
 ##################################
 
 def encrypt(name, mssg):
-    file_path = "inputImage/"+name
+    file_path = "media/enc/input/"+name
     try:
         img = Image.open(file_path)
-        img.save("inputImage/comp.jpg", optimize = True, quality=10)
-        img = Image.open('inputImage/comp.jpg')
+        img.save("media/enc/comp/"+name, optimize = True, quality=10)
+        img = Image.open('media/enc/comp/'+name)
  
         img_en = encode(img, mssg)
         name = name.split('.')[0]+"-en.png"
-        file_out = "outputImage/"+name
+        file_out = "media/enc/output/"+name
         img_en.save(file_out)
         return True,name
     except:
         return False,name
 
 def decrypt(name):
-    file_path = "outputImage/"+name
+    file_path = "media/dec/"+name
     try:
         img = Image.open(file_path, 'r')
         mssg = decode(img)
