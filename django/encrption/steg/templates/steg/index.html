@@ -1,29 +1,27 @@
 {% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <title>Project Steg</title>
 </head>
 <body>
-    <h1>Test</h1>
-   
-
-    {% block content %}
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="myimage">
-        <textarea rows="5" cols="60" name="messg">Enter messege here</textarea>
-        <button type="submit">Upload</button>
-      </form>
-      {% if uploaded_file_url %}
-      <p>File uploaded at: <a href="{{ uploaded_file_url }}" download="True">{{ uploaded_file_url }}</a></p>
-    {% endif %}
-
-    {% if erm %}
-      <p>{{ erm }}</p>
-    {% endif %}
-    {% endblock %}
+  <div class="text">
+    <h1>Project steganography</h1>
+    <h2>Welcome! To Encrypt your messege press Encode and to decrypt your messege press Decode from below.</h2>
+    <div class="buttons">
+      <a href="{% url 'encode' %}"><button type="button" class="btnencode">Encode</button></a>
+      <a href="{% url 'decode' %}"><button type="button" class="btndecode">Decode</button></a>
+    </div>
+    <p>Check out the project in Github <a href="https://github.com/vamsikartik01/project-stag" target="_blank">Github</a></p>
+    <p>What is steganography?</p>
+    <p>Steganography is the practice of hiding a secret message inside of something that is not secret. That something can be just about anything you want.
+      Here that something is an image of your choice. In the Encode webpage upload your image and enter the messege then we will integrate the messege into the image and the new image will be downloaded.
+      Now share the image to who ever you want but remember the image should not be compressed. To decrypt the messege simply upload the encrypted image in decode webpage.
+    </p>
+    </div>
+  </div>
 </body>
 </html>

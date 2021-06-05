@@ -6,6 +6,9 @@ from websteg import encrypt, decrypt
 # Create your views here.
 
 def index(request):
+    return render(request, 'steg/index.html')
+
+def encode(request):
     if request.method == "POST" and request.FILES['myimage']:
         myimage = request.FILES['myimage']
         fs = FileSystemStorage()
@@ -21,12 +24,14 @@ def index(request):
             fs.delete("enc/input/"+myimage.name)
             fs.delete("enc/comp/"+myimage.name)
             uploaded_file_url = '/media/enc/output/'+name
-            return render(request, 'steg/index.html', {
+            return render(request, 'steg/encode.html', {
                 'uploaded_file_url': uploaded_file_url
             })
         else:
-            return render(request, 'steg/index.html', {'erm':"error encoding"})
-    return render(request, 'steg/index.html')
+            return render(request, 'steg/encode.html', {'erm':"error encoding"})
+    elif request.method == "POST" and not request.FILES['myimage']:
+        return render(request, 'steg/encode.html', {'erm':"error encoding"})
+    return render(request, 'steg/encode.html')
 
 def decode(request):
     if request.method == "POST" and request.FILES['myimage']:

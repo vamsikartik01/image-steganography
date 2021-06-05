@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/decode.css' %}">
+    <title>Decode-steg</title>
 </head>
 <body>
-    <h2>Decode</h2>
-    {% block content %}
-    <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" name="myimage">
-    <button type="submit">Upload</button>
-    </form>
-    {% if messege %}
-    <p>{{ messege }}</p>
-    {% endif %}
-    {% endblock %}
+    <div class="container">
+        <h1>Decode</h1>
+        {% block content %}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="myimage" class="custom-file-input">
+        <p>Click here to go to Encode Webpage<a href="{% url 'encode' %}">Encode</a></p>
+        <button type="submit" class="btndecode">Upload & Decode</button>
+        </form>
+        {% if messege %}
+        <p>Decrypted messege</p>
+        <p class="messege">{{ messege }}</p>
+        {% endif %}
+        {% endblock %}
+    </div>
 </body>
 </html>

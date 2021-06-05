@@ -1,0 +1,31 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/encode.css' %}">
+    <title>Encode-steg</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Encode</h1>
+    {% if uploaded_file_url %}
+      <p>Download Your Encoded image here:  <a href="{{ uploaded_file_url }}" download="True">Download</a></p>
+    {% endif %}
+    {% if erm %}
+      <p>{{ erm }}</p>
+    {% endif %}
+
+    {% block content %}
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="myimage" class="custom-file-input">
+        <textarea rows="5" cols="60" name="messg" class="messege" placeholder="Enter your messege here..."></textarea>
+        <button type="submit" class="btnencode">Upload and Encode</button>
+      </form>
+      {% endblock %}
+      <p>Click here to go to Decode webpage<a href="{% url 'decode' %}"> Decode </a></p>
+    </div>
+</body>
+</html>
